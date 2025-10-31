@@ -85,11 +85,24 @@
             .hero-content {
                 padding: 0 3vw;
             }
+
+            .hero-subline {
+                font-size: clamp(0.875rem, 3vw, 3.5rem);
+            }
         }
 
         @media (max-width: 480px) {
             .hero-content {
                 padding: 0 2vw;
+            }
+
+            .hero-headline {
+                font-size: clamp(3.5rem, 12vw, 5rem);
+                line-height: 1.1;
+            }
+
+            .hero-subline {
+                font-size: clamp(1.3rem, 4.5vw, 2rem);
             }
         }
 
@@ -373,12 +386,27 @@
             height: 100%;
             background: #FFD166;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-family: 'Anton', sans-serif;
-            font-size: 3rem;
             color: #553C9A;
             border-radius: 0;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .placeholder-initials {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .placeholder-text {
+            font-size: 0.9rem;
+            text-transform: lowercase;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
         }
 
         .testimonial-text {
@@ -422,12 +450,13 @@
             }
 
             .testimonial-image {
-                width: 150px;
-                height: 150px;
+                width: 100%;
+                min-height: 200px;
+                max-width: 300px;
                 margin: 0 auto;
             }
 
-            .placeholder-image {
+            .placeholder-initials {
                 font-size: 2.5rem;
             }
         }
@@ -438,12 +467,15 @@
             }
 
             .testimonial-image {
-                width: 120px;
-                height: 120px;
+                min-height: 150px;
             }
 
-            .placeholder-image {
+            .placeholder-initials {
                 font-size: 2rem;
+            }
+
+            .placeholder-text {
+                font-size: 0.8rem;
             }
         }
 
@@ -765,8 +797,8 @@
                 
                 <div class="process-step">
                     <svg class="process-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <polyline points="3 17 9 11 13 15 21 7" stroke="#FFD166" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <polyline points="21 7 21 3 17 3" stroke="#FFD166" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="7" y1="17" x2="17" y2="7" stroke="#FFD166" stroke-width="2" stroke-linecap="round"/>
+                        <polyline points="10 7 17 7 17 14" stroke="#FFD166" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <h3 class="step-number">4. Deliver Results</h3>
                     <p class="step-description">Marketing that works because the backend supports it. Your profits actually grow.</p>
@@ -781,7 +813,10 @@
             
             <div class="testimonial-item">
                 <div class="testimonial-image">
-                    <div class="placeholder-image">MM</div>
+                    <div class="placeholder-image">
+                        <span class="placeholder-initials">MM</span>
+                        <span class="placeholder-text">placeholder for picture</span>
+                    </div>
                 </div>
                 <div class="testimonial-text">
                     <p class="quote">"Always a pleasure working with Isabel. She truly understands the B2B market. She adds passion and delivers projects on time, bringing a refreshing perspective to every task."</p>
@@ -791,7 +826,10 @@
 
             <div class="testimonial-item reverse">
                 <div class="testimonial-image">
-                    <div class="placeholder-image">BO</div>
+                    <div class="placeholder-image">
+                        <span class="placeholder-initials">BO</span>
+                        <span class="placeholder-text">placeholder for picture</span>
+                    </div>
                 </div>
                 <div class="testimonial-text">
                     <p class="quote">"Impressed with her level of sophistication and creativity. It was great working alongside Isabel."</p>
@@ -801,7 +839,10 @@
 
             <div class="testimonial-item">
                 <div class="testimonial-image">
-                    <div class="placeholder-image">MD</div>
+                    <div class="placeholder-image">
+                        <span class="placeholder-initials">MD</span>
+                        <span class="placeholder-text">placeholder for picture</span>
+                    </div>
                 </div>
                 <div class="testimonial-text">
                     <p class="quote">"It was a great pleasure working with such a reliable individual. She brings fresh, creative ideas and backs them up with results. Consistently elevating B2B projects."</p>
@@ -811,7 +852,10 @@
 
             <div class="testimonial-item reverse">
                 <div class="testimonial-image">
-                    <div class="placeholder-image">RP</div>
+                    <div class="placeholder-image">
+                        <span class="placeholder-initials">RP</span>
+                        <span class="placeholder-text">placeholder for picture</span>
+                    </div>
                 </div>
                 <div class="testimonial-text">
                     <p class="quote">"Worked with Isabel on a few projects now, and it has made an impactful difference to my business."</p>
