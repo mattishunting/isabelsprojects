@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Isabel - Isabel's Projects</title>
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-violet: #6B46C1;
+            --accent-yellow: #FFD166;
+            --neutral-dark: #2D3748;
+            --neutral-light: #F7FAFC;
+            --white: #FFFFFF;
+            --text-primary: #1A202C;
+            --text-secondary: #4A5568;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            padding: var(--spacing-sm) 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--primary-violet);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-violet);
+        }
+
+        .nav-cta {
+            background: var(--accent-yellow);
+            padding: 0.75rem 1.5rem;
+            color: var(--neutral-dark) !important;
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 209, 102, 0.4);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-violet);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-violet) 0%, #553C9A 100%);
+            color: var(--white);
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .container-wide {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .container-wide {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* About Sections */
+        .about-section {
+            padding: var(--spacing-lg) 0;
+        }
+
+        .about-section:nth-child(even) {
+            background: var(--neutral-light);
+        }
+
+        .about-section.violet-bg {
+            background: var(--primary-violet);
+        }
+
+        .about-section.violet-bg h2 {
+            color: var(--accent-yellow);
+        }
+
+        .section-intro {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-intro h2 {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary-violet);
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .section-intro p {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .personal-story {
+            background: var(--white);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .personal-story-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .image-placeholder {
+            background: var(--primary-violet);
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+            padding: var(--spacing-sm);
+            position: relative;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .personal-story p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .quote {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-violet);
+            font-style: italic;
+            padding: var(--spacing-sm);
+            border-left: 4px solid var(--accent-yellow);
+            margin: var(--spacing-md) 0;
+        }
+
+        /* Reason Cards */
+        .reason-card {
+            background: var(--accent-yellow);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .reason-card h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-violet);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .reason-card p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--neutral-dark);
+        }
+
+        /* Differentiators List */
+        .differentiators {
+            background: var(--white);
+            padding: var(--spacing-md);
+        }
+
+        .differentiators ul {
+            list-style: none;
+            display: grid;
+            gap: var(--spacing-md);
+            counter-reset: diff-counter;
+        }
+
+        .differentiators li {
+            padding-left: 4rem;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            counter-increment: diff-counter;
+        }
+
+        .differentiators li::before {
+            content: counter(diff-counter);
+            position: absolute;
+            left: 0;
+            color: var(--accent-yellow);
+            font-weight: 900;
+            font-size: 2.5rem;
+            font-family: 'Anton', sans-serif;
+            line-height: 1;
+        }
+
+        .differentiators strong {
+            color: var(--primary-violet);
+            font-weight: 700;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-violet) 0%, #553C9A 100%);
+            color: var(--white);
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Anton', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .cta-section p {
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto var(--spacing-md);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: var(--neutral-dark);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 209, 102, 0.4);
+        }
+
+        .btn-mini-cta {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary-violet);
+            padding: 0.75rem 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: var(--spacing-md);
+        }
+
+        .btn-mini-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .mini-cta-wrapper {
+            text-align: center;
+            padding-top: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--neutral-dark);
+            color: var(--white);
+            padding: var(--spacing-md) 0;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: var(--spacing-md);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .about-section {
+                padding: var(--spacing-md) 0;
+            }
+
+            .hero {
+                padding: var(--spacing-lg) var(--spacing-md);
+            }
+
+            .personal-story-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-placeholder {
+                order: -1;
+            }
+
+            .container-wide {
+                max-width: 95%;
+            }
+
+            .image-placeholder {
+                order: -1;
+            }
+
+            .container-wide {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Isabel's Projects</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="about.html">About</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="#contact" class="nav-cta">Book Free Consultation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>About Isabel</h1>
+        <p class="hero-subtitle">From Germany to Spain to Winnipeg: twenty-plus years of wearing many hats has taught me one thing. Small businesses need partners, not vendors.</p>
+    </section>
+
+    <!-- Personal Story -->
+    <section class="about-section">
+        <div class="container-wide">
+            <div class="section-intro">
+                <h2>Hi, I'm Isabel</h2>
+            </div>
+            
+            <div class="personal-story-grid">
+                <div class="personal-story">
+                    <p>My passion has always been writing, but life has pulled me in many directions along my extended twenty-plus years of business experience. I have worn many hats and held numerous roles that have broadened my knowledge across various services.</p>
+                    
+                    <div class="quote">
+                        "I believe a polished person can only exist once you've been in many shoes."
+                    </div>
+                    
+                    <p>Growing up in Germany and Spain has taught me many ways to view the world and its business etiquette, as well as the importance of balancing work and life. Now, I live in Winnipeg, MB, and I'm always looking to support small businesses in my community.</p>
+                </div>
+                
+                <!-- Replace this div with an img tag when you have Isabel's photo:
+                     <img src="path-to-isabel-photo.jpg" alt="Isabel - Copywriter and Operations Strategist"> -->
+                <div class="image-placeholder">placeholder for picture</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Clients Choose Me -->
+    <section class="about-section violet-bg">
+        <div class="container">
+            <div class="section-intro">
+                <h2>Why Clients Choose Me</h2>
+            </div>
+
+            <div class="reason-card">
+                <h3>I Don't Just Write. I Build Relationships.</h3>
+                <p>I have collected many titles over the past 25 years in business. I've learned that being an exceptional copywriter and strategist requires years of industry knowledge, as well as expertise in operations, management, and employee standards. To effectively relate to your customers from every angle and understand the business goals, it is essential to grasp the core principles of the business.</p>
+            </div>
+
+            <div class="reason-card">
+                <h3>I Stay Ahead So You Don't Have To.</h3>
+                <p>The marketing landscape changes constantly, especially with AI reshaping how we work. While others scramble to keep up, I make it my business to stay on top of emerging trends and technologies. I integrate AI strategically to enhance your marketing while maintaining the human touch that builds trust.</p>
+            </div>
+
+            <div class="reason-card">
+                <h3>Partnership Over Transactions.</h3>
+                <p>When you work with me, you're not just hiring a copywriter; you're gaining a strategic partner who listens, collaborates, and builds plans around your voice. My goal is simple: give you space to breathe while I handle the moving parts of your marketing strategy.</p>
+            </div>
+
+            <div class="mini-cta-wrapper">
+                <a href="#contact" class="btn-mini-cta">Sounds like what you need? Let's talk</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Sets Me Apart -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-intro">
+                <h2>What Sets Me Apart</h2>
+            </div>
+
+            <div class="differentiators">
+                <ul>
+                    <li>
+                        <strong>Industry Expertise:</strong> Deep understanding of both B2B and B2C markets, with the ability to speak your industry's language with clarity and authority
+                    </li>
+                    <li>
+                        <strong>Results-Driven Approach:</strong> Focused on turning leads into loyal customers through strategic copy that actually converts
+                    </li>
+                    <li>
+                        <strong>Fresh Perspective:</strong> I bring creative, innovative ideas to every challenge. No recycled "best practices" here
+                    </li>
+                    <li>
+                        <strong>Reliability You Can Count On:</strong> Consistent on-time delivery with a track record of client retention and business impact
+                    </li>
+                    <li>
+                        <strong>AI-Enhanced Strategy:</strong> Leveraging cutting-edge technology to track what's working, spot opportunities, and keep your brand ahead of the competition
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Transform Your Marketing?</h2>
+            <p>If you've been feeling the pressure of keeping up with marketing trends while running your business, let's talk. Sometimes all it takes is having someone who truly listens and understands your company's needs.</p>
+            <a href="#contact" class="btn-primary">Book Your Free Consultation</a>
+            <p style="margin-top: var(--spacing-sm); opacity: 0.9;">Why? Because you can't afford not to.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Isabel's Projects. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
