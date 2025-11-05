@@ -30,8 +30,9 @@
         }
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             padding: 0 4vw;
             display: flex;
             justify-content: space-between;
@@ -41,11 +42,17 @@
         nav .logo {
             font-family: 'Anton', sans-serif;
             font-size: clamp(1.5rem, 3vw, 2rem);
-            color: #FFFFFF;
+            color: #FFD166;
             font-weight: 900;
             letter-spacing: 0.02em;
             text-transform: uppercase;
             text-decoration: none;
+            margin-left: 0;
+            transition: opacity 0.3s;
+        }
+
+        nav .logo:hover {
+            opacity: 0.8;
         }
 
         .nav-links {
@@ -53,6 +60,8 @@
             list-style: none;
             gap: 2rem;
             align-items: center;
+            margin-left: auto;
+            margin-right: 0;
         }
 
         .nav-links a {
@@ -809,7 +818,7 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo">Isabel's projects</div>
+            <a href="index.html" class="logo">Isabel's projects</a>
             <div class="menu-toggle" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
