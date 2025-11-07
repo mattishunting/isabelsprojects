@@ -375,7 +375,7 @@
 
         /* ===== CTA SECTION ===== */
         .portfolio-cta {
-            background: var(--secondary-yellow);
+            background: white;
             color: var(--text-dark);
             padding: 5rem 0;
             text-align: center;
@@ -450,9 +450,25 @@
             }
         }
 
-        /* Focus styles for keyboard navigation */
-        a:focus, button:focus {
-            outline: 3px solid var(--secondary-yellow);
+        /* Focus styles - Remove all outlines for mouse clicks */
+        a:focus,
+        a:active,
+        button:focus,
+        button:active,
+        .framework-step-button:focus,
+        .framework-step-button:active,
+        .nav-links a:focus,
+        .nav-links a:active,
+        .nav-links button:focus,
+        .nav-links button:active {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Für Accessibility nur bei Tastatur-Navigation */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid rgba(107, 70, 193, 0.3);
             outline-offset: 2px;
         }
 
@@ -738,175 +754,129 @@
             opacity: 0.95;
         }
 
-        /* 5-Steps Overview */
+        /* 5-Steps Overview - Interactive Accordion */
         .framework-overview {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 3rem;
-            margin: 3rem 0;
-            margin-bottom: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 3rem auto;
+            margin-bottom: 100px;
             width: 100%;
+            max-width: 1200px;
         }
 
-        .framework-step {
-            background: var(--secondary-yellow);
-            padding: 2rem 1.5rem;
+        .framework-step-wrapper {
+            margin-bottom: 0;
+        }
+
+        .framework-step-wrapper:not(:last-child)::after {
+            content: '↓';
+            display: block;
             text-align: center;
+            font-size: 2rem;
+            color: white;
+            margin: 1.5rem 0;
+        }
+
+        .framework-step-button {
+            background: var(--secondary-yellow);
+            padding: 1.5rem 2rem;
+            text-align: left;
             position: relative;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .framework-step-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         .framework-step-number {
             font-size: 0.875rem;
             font-weight: bold;
             color: var(--primary-violet);
-            margin-bottom: 0.5rem;
             letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .framework-step-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
 
         .framework-step-title {
             font-family: 'Anton', sans-serif;
             font-size: clamp(1.25rem, 2vw, 1.5rem);
             color: var(--primary-violet);
-            margin-bottom: 0.5rem;
             letter-spacing: 0.02em;
+            margin: 0;
         }
 
         .framework-step-goal {
             font-size: 0.875rem;
             color: var(--text-dark);
             line-height: 1.4;
+            margin: 0;
         }
 
-        .framework-step:not(:last-child)::after {
-            content: '→';
-            position: absolute;
-            right: -2rem;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2rem;
-            color: white;
-            z-index: 1;
+        .framework-step-toggle {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-violet);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        @media (max-width: 1024px) {
-            .framework-overview {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .framework-step:not(:last-child)::after {
-                content: '↓';
-                right: auto;
-                left: 50%;
-                top: auto;
-                bottom: -1.5rem;
-                transform: translateX(-50%);
-            }
+        .framework-step-toggle::after {
+            content: '▼';
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
         }
 
-        .funnel-container {
-            max-width: 100%;
-            margin: 0 auto 4rem;
+        .framework-step-button.active .framework-step-toggle::after {
+            transform: rotate(180deg);
         }
 
-        .funnel-stage {
-            margin-bottom: 4rem;
+        /* Expanded Content */
+        .framework-step-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .framework-step-content.active {
+            max-height: 1000px;
+        }
+
+        .framework-step-expanded {
+            background: var(--secondary-yellow);
+            padding: 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            align-items: stretch;
+            margin-top: 0;
         }
 
-        .stage-header {
-            grid-column: 1 / -1;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Ungerade Stages (1, 3, 5): Bild links, Card rechts */
-        .funnel-stage:nth-child(odd) .funnel-image-wrapper {
-            grid-column: 1;
-        }
-
-        .funnel-stage:nth-child(odd) .funnel-card {
-            grid-column: 2;
-        }
-
-        /* Gerade Stages (2, 4): Card links, Bild rechts */
-        .funnel-stage:nth-child(even) .funnel-image-wrapper {
-            grid-column: 2;
-        }
-
-        .funnel-stage:nth-child(even) .funnel-card {
-            grid-column: 1;
-        }
-
-        .funnel-image-wrapper {
-            height: 100%;
-            display: flex;
-            align-items: stretch;
-        }
-
-        .stage-number {
-            display: inline-block;
-            background: white;
-            color: var(--primary-violet);
-            padding: 0.5rem 1.5rem;
-            border-radius: 0;
-            font-size: 0.875rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 0.75rem;
-        }
-
-        .stage-title {
-            font-family: 'Anton', sans-serif;
-            font-size: clamp(1.75rem, 3vw, 2.25rem);
-            color: white;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
-        }
-
-        .stage-goal {
-            font-size: 1.125rem;
-            color: white;
-            opacity: 0.95;
-            font-style: italic;
-        }
-
-        .funnel-card {
-            background: var(--secondary-yellow);
-            border-radius: 0;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-        }
-
-        .funnel-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
-        }
-
-        .funnel-card .project-label {
-            background: var(--primary-violet);
-            color: white;
-        }
-
-        .funnel-image {
+        .framework-step-image {
             width: 100%;
             height: 100%;
             min-height: 400px;
         }
 
-        .image-placeholder-funnel {
+        .framework-image-placeholder {
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E0 100%);
-            border-radius: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -914,34 +884,42 @@
             gap: 0.5rem;
         }
 
-        .funnel-card h4 {
+        .framework-step-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .framework-step-details .project-label {
+            background: var(--primary-violet);
+            color: white;
+        }
+
+        .framework-step-details h4 {
             font-size: 1.25rem;
             color: var(--primary-violet);
-            margin-bottom: 0.75rem;
+            margin: 0;
             font-weight: 600;
         }
 
-        .funnel-summary {
+        .framework-step-summary {
             font-size: 0.95rem;
             color: var(--text-dark);
             line-height: 1.6;
-            margin-bottom: 1rem;
         }
 
-        .funnel-strategy {
+        .framework-step-strategy {
             background: rgba(107, 70, 193, 0.1);
             padding: 1rem;
-            border-radius: 0;
             border-left: 3px solid var(--primary-violet);
-            margin-bottom: 1rem;
             font-size: 0.95rem;
         }
 
-        .funnel-strategy strong {
+        .framework-step-strategy strong {
             color: var(--primary-violet);
         }
 
-        .view-sample-btn-funnel {
+        .view-sample-btn-framework {
             display: inline-block;
             background: var(--primary-violet);
             color: white;
@@ -954,37 +932,27 @@
             align-self: flex-start;
         }
 
-        .view-sample-btn-funnel:hover {
+        .view-sample-btn-framework:hover {
             background: #553C9A;
             transform: translateY(-2px);
         }
 
-        .funnel-arrow {
-            grid-column: 1 / -1;
-            text-align: center;
-            font-size: 2rem;
-            color: white;
-            margin: 2rem 0;
-        }
-
         @media (max-width: 1024px) {
-            .funnel-stage {
+            .framework-step-button {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            .framework-step-toggle {
+                justify-content: center;
+            }
+
+            .framework-step-expanded {
                 grid-template-columns: 1fr;
             }
 
-            .funnel-stage:nth-child(odd) .funnel-image-wrapper,
-            .funnel-stage:nth-child(even) .funnel-image-wrapper {
-                grid-column: 1;
-                grid-row: 2;
-            }
-
-            .funnel-stage:nth-child(odd) .funnel-card,
-            .funnel-stage:nth-child(even) .funnel-card {
-                grid-column: 1;
-                grid-row: 3;
-            }
-
-            .funnel-image {
+            .framework-step-image {
                 min-height: 300px;
             }
         }
@@ -1028,20 +996,15 @@
         }
 
         /* ===== FOOTER ===== */
-        footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 4rem 0 2rem;
+        .footer {
+            background: #000000;
+            padding: 4rem 2rem;
+            text-align: center;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
         }
 
         .footer-headline {
@@ -1053,89 +1016,28 @@
             letter-spacing: 0.02em;
         }
 
-        .footer-contact p {
-            margin-bottom: 1rem;
-            color: rgba(255, 255, 255, 0.9);
+        .footer-info {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            color: #FFFFFF;
+            line-height: 2;
         }
 
-        .footer-contact a {
-            color: #FFD166;
-            text-decoration: none;
-            transition: opacity 0.3s;
+        .footer-copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333333;
         }
 
-        .footer-contact a:hover {
-            opacity: 0.8;
-        }
-
-        .footer-column h4 {
-            color: #FFD166;
-            font-size: 1.125rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+        .footer-copyright p {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            color: #CCCCCC;
+            margin-bottom: 0.5rem;
         }
 
         .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #FFD166;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 2rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-bottom-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .footer-bottom-links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.3s;
-        }
-
-        .footer-bottom-links a:hover {
-            color: #FFD166;
-        }
-
-        @media (max-width: 768px) {
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .footer-bottom-links {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
+            margin-top: 0.5rem;
         }
     </style>
 </head>
@@ -1239,173 +1141,165 @@
                 <p class="section-intro">A strategic email system designed to guide customers through every stage—from awareness to retention. Each touchpoint is optimized for its specific role in the journey.</p>
             </div>
 
-            <!-- Framework Overview -->
+            <!-- Framework Overview - Interactive Accordion -->
             <div class="framework-overview">
-                <div class="framework-step">
-                    <div class="framework-step-number">STAGE 1</div>
-                    <h3 class="framework-step-title">AWARENESS</h3>
-                    <p class="framework-step-goal">Get them on the list with clear value</p>
-                </div>
-                <div class="framework-step">
-                    <div class="framework-step-number">STAGE 2</div>
-                    <h3 class="framework-step-title">INTEREST</h3>
-                    <p class="framework-step-goal">Educate and position as the solution</p>
-                </div>
-                <div class="framework-step">
-                    <div class="framework-step-number">STAGE 3</div>
-                    <h3 class="framework-step-title">CONSIDERATION</h3>
-                    <p class="framework-step-goal">Re-activate cold leads with value</p>
-                </div>
-                <div class="framework-step">
-                    <div class="framework-step-number">STAGE 4</div>
-                    <h3 class="framework-step-title">DECISION</h3>
-                    <p class="framework-step-goal">Leverage existing trust for expansion</p>
-                </div>
-                <div class="framework-step">
-                    <div class="framework-step-number">STAGE 5</div>
-                    <h3 class="framework-step-title">RETENTION</h3>
-                    <p class="framework-step-goal">Reduce anxiety, increase show-up rate</p>
-                </div>
-            </div>
-
-            <div class="funnel-container">
-
+                
                 <!-- STAGE 1: AWARENESS -->
-                <div class="funnel-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">STAGE 1</div>
-                        <h3 class="stage-title">AWARENESS</h3>
-                        <p class="stage-goal">Get them on the list with clear value</p>
-                    </div>
-                    <div class="funnel-image-wrapper">
-                        <div class="funnel-image">
-                            <div class="image-placeholder-funnel">
-                                <span class="placeholder-icon">📧</span>
-                                <span class="placeholder-label">lead-magnet-cleaning.png</span>
+                <div class="framework-step-wrapper">
+                    <button class="framework-step-button" onclick="toggleStage(this)">
+                        <div class="framework-step-number">STAGE 1</div>
+                        <div class="framework-step-info">
+                            <h3 class="framework-step-title">AWARENESS</h3>
+                            <p class="framework-step-goal">Get them on the list with clear value</p>
+                        </div>
+                        <div class="framework-step-toggle">Show more</div>
+                    </button>
+                    <div class="framework-step-content">
+                        <div class="framework-step-expanded">
+                            <div class="framework-step-image">
+                                <div class="framework-image-placeholder">
+                                    <span class="placeholder-icon">📧</span>
+                                    <span class="placeholder-label">lead-magnet-cleaning.png</span>
+                                </div>
+                            </div>
+                            <div class="framework-step-details">
+                                <span class="project-label">LEAD MAGNET EMAIL</span>
+                                <h4>Commercial Cleaning – Checklist Delivery</h4>
+                                <p class="framework-step-summary">Welcome email with immediate value delivery ("15-Minute Office Reset Checklist"). Establishes authority (cleaning industry expert), offers additional resources (blog, YouTube), and invites follow-up (reply with questions).</p>
+                                <div class="framework-step-strategy">
+                                    <strong>Strategic Purpose:</strong> Build trust immediately by delivering what was promised. Set expectations for future emails. Make it easy to engage further.
+                                </div>
+                                <a href="samples/email-lead-magnet-cleaning.pdf" class="view-sample-btn-framework">View Sample</a>
                             </div>
                         </div>
                     </div>
-                    <div class="funnel-card">
-                        <span class="project-label">LEAD MAGNET EMAIL</span>
-                        <h4>Commercial Cleaning – Checklist Delivery</h4>
-                        <p class="funnel-summary">Welcome email with immediate value delivery ("15-Minute Office Reset Checklist"). Establishes authority (cleaning industry expert), offers additional resources (blog, YouTube), and invites follow-up (reply with questions).</p>
-                        <div class="funnel-strategy">
-                            <strong>Strategic Purpose:</strong> Build trust immediately by delivering what was promised. Set expectations for future emails. Make it easy to engage further.
-                        </div>
-                        <a href="samples/email-lead-magnet-cleaning.pdf" class="view-sample-btn-funnel">View Sample</a>
-                    </div>
-                    <div class="funnel-arrow">↓</div>
                 </div>
 
                 <!-- STAGE 2: INTEREST -->
-                <div class="funnel-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">STAGE 2</div>
-                        <h3 class="stage-title">INTEREST</h3>
-                        <p class="stage-goal">Educate and position as the solution</p>
-                    </div>
-                    <div class="funnel-image-wrapper">
-                        <div class="funnel-image">
-                            <div class="image-placeholder-funnel">
-                                <span class="placeholder-icon">📧</span>
-                                <span class="placeholder-label">nurture-newsletter.png</span>
+                <div class="framework-step-wrapper">
+                    <button class="framework-step-button" onclick="toggleStage(this)">
+                        <div class="framework-step-number">STAGE 2</div>
+                        <div class="framework-step-info">
+                            <h3 class="framework-step-title">INTEREST</h3>
+                            <p class="framework-step-goal">Educate and position as the solution</p>
+                        </div>
+                        <div class="framework-step-toggle">Show more</div>
+                    </button>
+                    <div class="framework-step-content">
+                        <div class="framework-step-expanded">
+                            <div class="framework-step-image">
+                                <div class="framework-image-placeholder">
+                                    <span class="placeholder-icon">📧</span>
+                                    <span class="placeholder-label">nurture-newsletter.png</span>
+                                </div>
+                            </div>
+                            <div class="framework-step-details">
+                                <span class="project-label">NURTURE EMAIL / NEWSLETTER</span>
+                                <h4>B2B SaaS – Product Education Series</h4>
+                                <p class="framework-step-summary">Weekly newsletter blending education with subtle product positioning. Features customer success stories, industry insights, and product tips. No hard sell—just consistent value that builds authority and keeps brand top of mind.</p>
+                                <div class="framework-step-strategy">
+                                    <strong>Strategic Purpose:</strong> Stay relevant without being pushy. Demonstrate expertise. Show (don't tell) how the product solves real problems.
+                                </div>
+                                <a href="samples/email-nurture-newsletter.pdf" class="view-sample-btn-framework">View Sample</a>
                             </div>
                         </div>
                     </div>
-                    <div class="funnel-card">
-                        <span class="project-label">NURTURE EMAIL / NEWSLETTER</span>
-                        <h4>B2B SaaS – Product Education Series</h4>
-                        <p class="funnel-summary">Weekly newsletter blending education with subtle product positioning. Features customer success stories, industry insights, and product tips. No hard sell—just consistent value that builds authority and keeps brand top of mind.</p>
-                        <div class="funnel-strategy">
-                            <strong>Strategic Purpose:</strong> Stay relevant without being pushy. Demonstrate expertise. Show (don't tell) how the product solves real problems.
-                        </div>
-                        <a href="samples/email-nurture-newsletter.pdf" class="view-sample-btn-funnel">View Sample</a>
-                    </div>
-                    <div class="funnel-arrow">↓</div>
                 </div>
 
                 <!-- STAGE 3: CONSIDERATION -->
-                <div class="funnel-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">STAGE 3</div>
-                        <h3 class="stage-title">CONSIDERATION</h3>
-                        <p class="stage-goal">Re-activate cold leads with value</p>
-                    </div>
-                    <div class="funnel-image-wrapper">
-                        <div class="funnel-image">
-                            <div class="image-placeholder-funnel">
-                                <span class="placeholder-icon">📧</span>
-                                <span class="placeholder-label">reengagement-mortgage-broker.png</span>
+                <div class="framework-step-wrapper">
+                    <button class="framework-step-button" onclick="toggleStage(this)">
+                        <div class="framework-step-number">STAGE 3</div>
+                        <div class="framework-step-info">
+                            <h3 class="framework-step-title">CONSIDERATION</h3>
+                            <p class="framework-step-goal">Re-activate cold leads with value</p>
+                        </div>
+                        <div class="framework-step-toggle">Show more</div>
+                    </button>
+                    <div class="framework-step-content">
+                        <div class="framework-step-expanded">
+                            <div class="framework-step-image">
+                                <div class="framework-image-placeholder">
+                                    <span class="placeholder-icon">📧</span>
+                                    <span class="placeholder-label">reengagement-mortgage-broker.png</span>
+                                </div>
+                            </div>
+                            <div class="framework-step-details">
+                                <span class="project-label">RE-ENGAGEMENT EMAIL</span>
+                                <h4>Real Estate – Mortgage Decision Guide</h4>
+                                <p class="framework-step-summary">Educational comparison table (Mortgage Broker vs. Bank) that re-engages cold leads through actionable information. Multi-CTA strategy (email, call, DM, referral) meets customers where they are.</p>
+                                <div class="framework-step-strategy">
+                                    <strong>Strategic Purpose:</strong> Provide value without pressure, remove decision paralysis, guide towards next step without hard sell.
+                                </div>
+                                <a href="samples/email-reengagement-mortgage.pdf" class="view-sample-btn-framework">View Sample</a>
                             </div>
                         </div>
                     </div>
-                    <div class="funnel-card">
-                        <span class="project-label">RE-ENGAGEMENT EMAIL</span>
-                        <h4>Real Estate – Mortgage Decision Guide</h4>
-                        <p class="funnel-summary">Educational comparison table (Mortgage Broker vs. Bank) that re-engages cold leads through actionable information. Multi-CTA strategy (email, call, DM, referral) meets customers where they are.</p>
-                        <div class="funnel-strategy">
-                            <strong>Strategic Purpose:</strong> Provide value without pressure, remove decision paralysis, guide towards next step without hard sell.
-                        </div>
-                        <a href="samples/email-reengagement-mortgage.pdf" class="view-sample-btn-funnel">View Sample</a>
-                    </div>
-                    <div class="funnel-arrow">↓</div>
                 </div>
 
                 <!-- STAGE 4: DECISION -->
-                <div class="funnel-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">STAGE 4</div>
-                        <h3 class="stage-title">DECISION</h3>
-                        <p class="stage-goal">Leverage existing trust for expansion</p>
-                    </div>
-                    <div class="funnel-image-wrapper">
-                        <div class="funnel-image">
-                            <div class="image-placeholder-funnel">
-                                <span class="placeholder-icon">📧</span>
-                                <span class="placeholder-label">upsell-toothbrush.png</span>
+                <div class="framework-step-wrapper">
+                    <button class="framework-step-button" onclick="toggleStage(this)">
+                        <div class="framework-step-number">STAGE 4</div>
+                        <div class="framework-step-info">
+                            <h3 class="framework-step-title">DECISION</h3>
+                            <p class="framework-step-goal">Leverage existing trust for expansion</p>
+                        </div>
+                        <div class="framework-step-toggle">Show more</div>
+                    </button>
+                    <div class="framework-step-content">
+                        <div class="framework-step-expanded">
+                            <div class="framework-step-image">
+                                <div class="framework-image-placeholder">
+                                    <span class="placeholder-icon">📧</span>
+                                    <span class="placeholder-label">upsell-toothbrush.png</span>
+                                </div>
+                            </div>
+                            <div class="framework-step-details">
+                                <span class="project-label">UPSELL EMAIL</span>
+                                <h4>Sonic E-Toothbrush – Product Launch</h4>
+                                <p class="framework-step-summary">New product introduction to existing customers. Acknowledges previous purchase, leads with benefits (faster results, better clean), adds limited-time incentive (50% off 2nd brush, code 50OFF).</p>
+                                <div class="framework-step-strategy">
+                                    <strong>Strategic Purpose:</strong> Maximize customer lifetime value by introducing complementary products. Uses urgency (July 31 deadline) without pressure.
+                                </div>
+                                <a href="samples/email-upsell-toothbrush.pdf" class="view-sample-btn-framework">View Sample</a>
                             </div>
                         </div>
                     </div>
-                    <div class="funnel-card">
-                        <span class="project-label">UPSELL EMAIL</span>
-                        <h4>Sonic E-Toothbrush – Product Launch</h4>
-                        <p class="funnel-summary">New product introduction to existing customers. Acknowledges previous purchase, leads with benefits (faster results, better clean), adds limited-time incentive (50% off 2nd brush, code 50OFF).</p>
-                        <div class="funnel-strategy">
-                            <strong>Strategic Purpose:</strong> Maximize customer lifetime value by introducing complementary products. Uses urgency (July 31 deadline) without pressure.
-                        </div>
-                        <a href="samples/email-upsell-toothbrush.pdf" class="view-sample-btn-funnel">View Sample</a>
-                    </div>
-                    <div class="funnel-arrow">↓</div>
                 </div>
 
                 <!-- STAGE 5: RETENTION -->
-                <div class="funnel-stage">
-                    <div class="stage-header">
-                        <div class="stage-number">STAGE 5</div>
-                        <h3 class="stage-title">RETENTION</h3>
-                        <p class="stage-goal">Reduce anxiety, increase show-up rate</p>
-                    </div>
-                    <div class="funnel-image-wrapper">
-                        <div class="funnel-image">
-                            <div class="image-placeholder-funnel">
-                                <span class="placeholder-icon">📧</span>
-                                <span class="placeholder-label">onboarding-consultation.png</span>
+                <div class="framework-step-wrapper">
+                    <button class="framework-step-button" onclick="toggleStage(this)">
+                        <div class="framework-step-number">STAGE 5</div>
+                        <div class="framework-step-info">
+                            <h3 class="framework-step-title">RETENTION</h3>
+                            <p class="framework-step-goal">Reduce anxiety, increase show-up rate</p>
+                        </div>
+                        <div class="framework-step-toggle">Show more</div>
+                    </button>
+                    <div class="framework-step-content">
+                        <div class="framework-step-expanded">
+                            <div class="framework-step-image">
+                                <div class="framework-image-placeholder">
+                                    <span class="placeholder-icon">📧</span>
+                                    <span class="placeholder-label">onboarding-consultation.png</span>
+                                </div>
+                            </div>
+                            <div class="framework-step-details">
+                                <span class="project-label">ONBOARDING EMAIL</span>
+                                <h4>Medical Aesthetics – Consultation Prep</h4>
+                                <p class="framework-step-summary">Post-booking email that walks clients through exactly what to expect. Checklist format (📝 Treatment, Procedure, Product, Questions) + "warm greeting at the door" emotional assurance. Reduces no-shows.</p>
+                                <div class="framework-step-strategy">
+                                    <strong>Strategic Purpose:</strong> Reduce buyer's remorse, prevent no-shows, set clear expectations, reinforce decision with social proof (Instagram results).
+                                </div>
+                                <a href="samples/email-onboarding-consultation.pdf" class="view-sample-btn-framework">View Sample</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="funnel-card">
-                        <span class="project-label">ONBOARDING EMAIL</span>
-                        <h4>Medical Aesthetics – Consultation Prep</h4>
-                        <p class="funnel-summary">Post-booking email that walks clients through exactly what to expect. Checklist format (📝 Treatment, Procedure, Product, Questions) + "warm greeting at the door" emotional assurance. Reduces no-shows.</p>
-                        <div class="funnel-strategy">
-                            <strong>Strategic Purpose:</strong> Reduce buyer's remorse, prevent no-shows, set clear expectations, reinforce decision with social proof (Instagram results).
-                        </div>
-                        <a href="samples/email-onboarding-consultation.pdf" class="view-sample-btn-funnel">View Sample</a>
                     </div>
                 </div>
 
             </div>
-
             <!-- Framework Summary -->
             <div class="framework-summary">
                 <h3>Why This Framework Works</h3>
@@ -1438,41 +1332,20 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="footer-content">
-            <div class="footer-contact">
-                <h3 class="footer-headline">Get In Touch</h3>
-                <p><strong>Phone:</strong> <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
-                <p><strong>Email:</strong> <a href="mailto:hello@isabelsprojects.com">hello@isabelsprojects.com</a></p>
-                <p><strong>Location:</strong> Berlin, Germany</p>
-            </div>
-
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-column">
-                <h4>Services</h4>
-                <ul class="footer-links">
-                    <li><a href="#featured-work">Email Marketing</a></li>
-                    <li><a href="#featured-work">Landing Page Copy</a></li>
-                    <li><a href="#featured-work">Content Strategy</a></li>
-                    <li><a href="#featured-work">Conversion Optimization</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2024 Isabel's Projects. All rights reserved.</p>
-            <div class="footer-bottom-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+            <h3 class="footer-headline">Get In Touch</h3>
+            <p class="footer-info">
+                204-430-2658<br>
+                info@isabelsprojects.com<br>
+                Winnipeg, Manitoba<br>
+                Canada
+            </p>
+            <div class="footer-copyright">
+                <p>Copyright © Isabel's Projects 2025</p>
+                <p class="footer-links">
+                    Privacy Policy | Terms & Condition
+                </p>
             </div>
         </div>
     </footer>
@@ -1499,6 +1372,24 @@
                 navLinks.classList.remove('active');
             });
         });
+
+        // Framework Accordion Toggle
+        function toggleStage(button) {
+            const wrapper = button.parentElement;
+            const content = wrapper.querySelector('.framework-step-content');
+            const toggle = button.querySelector('.framework-step-toggle');
+            
+            // Toggle active states
+            button.classList.toggle('active');
+            content.classList.toggle('active');
+            
+            // Update toggle text
+            if (content.classList.contains('active')) {
+                toggle.textContent = 'Show less';
+            } else {
+                toggle.textContent = 'Show more';
+            }
+        }
     </script>
 
 </body>
